@@ -1,0 +1,14 @@
+# Ignore PyCharm project files
+/.idea
+/coffeMachine/.idea
+/coffeMachine/pythonProject1
+/coffeMachine/__pycache__/*
+
+# Ignore PyCharm configuration files
+*.iml
+*.ipr
+*.iws
+
+# Ignore PyCharm settings files
+/.idea/workspace.xml
+/.idea/misc.xml
