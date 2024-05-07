@@ -3,6 +3,9 @@
 /coffeMachine/.idea
 /coffeMachine/pythonProject1
 /coffeMachine/__pycache__/*
+/day-16-start/.venv
+/day-16-start/.idea
+/day-16-start/__pycache__/*
 
 # Ignore PyCharm configuration files
 *.iml
