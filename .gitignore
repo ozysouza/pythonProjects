@@ -1,11 +1,11 @@
-# Ignore PyCharm project files
-/.idea
-/coffeMachine/.idea
-/coffeMachine/pythonProject1
-/coffeMachine/__pycache__/*
-/day-16-start/.venv
-/day-16-start/.idea
-/day-16-start/__pycache__/*
+# Ignore common Python files and directories
+*.pyc
+.DS_Store
+.env
+.venv
+.idea
+__pycache__
+venv
 
 # Ignore PyCharm configuration files
 *.iml
