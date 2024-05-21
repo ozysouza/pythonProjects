@@ -33,15 +33,11 @@ while game_is_on:
         snake.extend()
         score.increase_score()
 
-    # Detect collision with wall
-    if snake.collision_on_x() or snake.collision_on_y():
-        game_is_on = False
-        score.game_over("Game is Over! You hit the wall!")
+    # Detect collision with wall or body
+    if snake.collision_on_x() or snake.collision_on_y() or snake.collision_on_body():
+        score.reset_score()
+        snake.reset_snake()
 
-    # Detect collision with body
-    if snake.collision_on_body():
-        game_is_on = False
-        score.game_over("Game is Over! You hit the tail!")
 
 screen.exitonclick()
 

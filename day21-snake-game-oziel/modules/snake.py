@@ -47,6 +47,13 @@ class Snake:
             if self.head.distance(snake) < 10:
                 return True
 
+    def reset_snake(self):
+        for snake in self.snakes:
+            snake.goto(1000, 1000)
+        self.snakes.clear()
+        self.create_snake()
+        self.head = self.snakes[0]
+
     def move_up(self):
         if self.head.heading() != DOWN:
             self.head.setheading(UP)
