@@ -1,8 +1,8 @@
 #TODO: Create a letter using starting_letter.txt
 
 import os
-INPUT_FILE_PATH = "/home/oziel/Documents/mail-project/Input/Letters/starting_letter.txt"
-OUTPUT_DIR = "/home/oziel/Documents/mail-project/Output/ReadyToSend"
+INPUT_FILE_PATH = "Input/Letters/starting_letter.txt"
+OUTPUT_DIR = "Output/ReadyToSend"
 PLACEHOLDER = "[name]"
 
 with (open("Input/Names/invited_names.txt") as invited_names):
