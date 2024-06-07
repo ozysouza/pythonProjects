@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import secrets
 import pyperclip
+import json
 
 window = Tk()
 window.title("Password Manager")
@@ -21,20 +22,49 @@ def random_passwd():
 
 # ------------------------ Save Password -------------------------
 def save():
+    new_data = {
+        website_entry.get(): {
+            "email": username_entry.get(),
+            "password": passwd_entry.get()
+        }
+    }
+
     if len(website_entry.get()) == 0 or len(passwd_entry.get()) == 0:
         messagebox.showinfo(title="Opps!", message="Please don't leave empty fields!")
     else:
-        save_data = messagebox.askokcancel(title=website_entry.get(), message=f"There are the details entered: "
-                                                                              f"\nEmail: {username_entry.get()}"
-                                                                              f"\nPassword: {passwd_entry.get()}")
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)
 
-        if save_data:
-            with open("data.txt", "a") as file:
-                file.write(f"{website_entry.get()} | {username_entry.get()} | {passwd_entry.get()} \n")
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+        finally:
+            website_entry.delete(0, END)
+            website_entry.focus()
+            passwd_entry.delete(0, END)
 
-                website_entry.delete(0, END)
-                website_entry.focus()
-                passwd_entry.delete(0, END)
+
+# ------------------------ Find Password -------------------------
+def find_password():
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found!")
+    else:
+        if website_entry.get() in data:
+            email = data[website_entry.get()]["email"]
+            passwd = data[website_entry.get()]["password"]
+            messagebox.showinfo(title=website_entry.get(),
+                                message=f"Email: {email}\n"
+                                        f"Password: {passwd}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website_entry.get()} exists.")
 
 
 # Set Up Screen
@@ -47,9 +77,12 @@ canvas.grid(row=0, column=1)
 website_label = Label(text="Website:", bg="white")
 website_label.grid(row=1, column=0)
 
-website_entry = Entry(width=40)
-website_entry.grid(row=1, column=1, columnspan=2, padx=2, pady=2)
+website_entry = Entry(width=23)
+website_entry.grid(row=1, column=1, padx=2, pady=2)
 website_entry.focus()
+
+search_btn = Button(text="Search", width=15, bg="white", padx=2, pady=2, command=find_password)
+search_btn.grid(row=1, column=2)
 
 username_label = Label(text="Email/Username:", bg="white")
 username_label.grid(row=2, column=0)
