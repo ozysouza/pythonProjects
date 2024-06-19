@@ -10,6 +10,7 @@ PASSWD = os.getenv("MY_GMAIL_APP_PASSWD")
 df = pd.read_csv("birthdays.csv")
 match_birthdate = {}
 
+# birthdays_dict = {(data_row["month"], data_row["day"]): data_row for (index, data_row) in df.iterrows()}
 
 def check_birthday():
     global match_birthdate
