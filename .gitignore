@@ -15,3 +15,9 @@ venv
 # Ignore PyCharm settings files
 /.idea/workspace.xml
 /.idea/misc.xml
+
+# Ignore sensitive data
+*.env
+*.cache
+*.log
+commands.txt
