@@ -1,0 +1,37 @@
+import spotipy
+import os
+
+from spotipy.oauth2 import SpotifyOAuth
+
+
+class Authenticator:
+    """
+    Class to handle Spotify authentication.
+    """
+    def __init__(self):
+        """
+        Initializes the SpotifyAuthenticator with the provided credentials.
+
+        Args:
+            client_id (str): The client ID for the Spotify app.
+            client_secret (str): The client secret for the Spotify app.
+            redirect_uri (str): The redirect URI for the Spotify app.
+        """
+        self.client_id = os.getenv("SPOTIPY_CLIENT_ID")
+        self.client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
+        self.client_uri = os.getenv("SPOTIPY_REDIRECT_URI")
+        self.sp = self.authenticate()
+
+    def authenticate(self):
+        """
+        Authenticates the user with Spotify and retrieves an access token.
+
+        Returns:
+             The authenticated user.
+        """
+        sp_oauth = spotipy.Spotify(auth_manager=SpotifyOAuth(
+            client_id=self.client_id,
+            client_secret=self.client_secret,
+            redirect_uri=self.client_uri,
+            scope="user-library-read playlist-modify-public playlist-read-private"))
+        return sp_oauth
