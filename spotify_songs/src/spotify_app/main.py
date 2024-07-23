@@ -1,7 +1,7 @@
 import requests
 
 from bs4 import BeautifulSoup
-from src.spotify_app.services import Services
+from src.spotify_service.services import Services
 from src.spotify_auth.authenticator import Authenticator
 from src.utils.utils import *
 from src.utils.logger import *
