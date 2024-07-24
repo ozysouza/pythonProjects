@@ -1,7 +1,10 @@
+import logging
+
 import spotipy
 import os
 
 from spotipy.oauth2 import SpotifyOAuth
+from src.utils.logger import show_logging
 
 
 class Authenticator:
@@ -29,9 +32,15 @@ class Authenticator:
         Returns:
              The authenticated user.
         """
-        sp_oauth = spotipy.Spotify(auth_manager=SpotifyOAuth(
-            client_id=self.client_id,
-            client_secret=self.client_secret,
-            redirect_uri=self.client_uri,
-            scope="user-library-read playlist-modify-public playlist-read-private"))
-        return sp_oauth
+        try:
+            show_logging("Authenticating with Spotify.", logging.INFO)
+            sp_oauth = spotipy.Spotify(auth_manager=SpotifyOAuth(
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+                redirect_uri=self.client_uri,
+                scope="user-library-read playlist-modify-public playlist-read-private"))
+            show_logging("Authenticating successful.", logging.INFO)
+            return sp_oauth
+        except Exception as e:
+            show_logging(f"Authentication failed: {e}", logging.ERROR)
+            raise

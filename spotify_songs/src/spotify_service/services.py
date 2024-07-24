@@ -44,6 +44,7 @@ class Services:
                 - name - the name of the playlist
                 - description - the description of the playlist
         """
+        show_logging(f"Creating Playlist: {name}", logging.INFO)
         self.sp.user_playlist_create(
             user=self.sp.current_user()["id"],
             name=name,
@@ -62,7 +63,7 @@ class Services:
         try:
             for (idx, playlist) in enumerate(playlists["items"]):
                 if playlist_name.title() in playlist["name"]:
-                    show_logging("Match found!", logging.WARNING)
+                    show_logging("Match found!", logging.INFO)
                     return playlist["id"]
                 show_logging("No match found.", logging.WARNING)
         except KeyError as error:
@@ -92,21 +93,24 @@ class Services:
         except IndexError:
             show_logging(f"{song_title} doesn't exist in Spotify. Skipped.", logging.ERROR)
 
-    def add_track_to_playlist(self, playlist_id, track_list):
+    def add_track_to_playlist(self, playlist_id, track_list, song, author):
         """
         Add a track to a Spotify playlist.
 
         Args:
             playlist_id (str): The Spotify playlist ID.
             track_list (str): The Spotify track ID.
-
+            song (str): The song's name.
+            author (str): The Author's name.
         Returns:
             dict: The response from the Spotify API.
         """
         try:
             response = self.sp.playlist_add_items(playlist_id, [track_list])
+            show_logging(f"Adding {song} by Author: {author}", logging.INFO)
             return response
         except SpotifyException as e:
             show_logging(f"Spotify API error: {e}", logging.ERROR)
         except Exception as e:
-            show_logging(f"An unexpected error occurred while adding the track to the playlist: {e}", logging.ERROR)
+            show_logging(f"An unexpected error occurred while adding the track: {song}, by the Author: {author} to "
+                         f"the playlist: {e}", logging.ERROR)
