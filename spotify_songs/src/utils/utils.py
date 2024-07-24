@@ -3,7 +3,7 @@ import re
 from datetime import date
 
 
-def validate_date(date_input):
+def validate_date(date_input: str) -> bool:
     try:
         date.fromisoformat(date_input)
         return True
@@ -11,7 +11,7 @@ def validate_date(date_input):
         return False
 
 
-def clean_author_name(author_name):
+def clean_author_name(author_name: str) -> str:
     """
     Cleans the author name by replacing 'featuring' (or variants) with a semicolon.
 

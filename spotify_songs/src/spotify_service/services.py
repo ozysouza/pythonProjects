@@ -36,7 +36,7 @@ class Services:
             track = item['track']
             print(idx, track['artists'][0]['name'], " – ", track['name'])
 
-    def create_play_list(self, name, description=""):
+    def create_play_list(self, name: str, description=""):
         """ Creates a playlist for a user
 
             Parameters:
@@ -51,11 +51,12 @@ class Services:
             description=description,
         )
 
-    def get_play_list_id(self, playlist_name) -> str:
+    def get_play_list_id(self, playlist_name: str) -> str:
         """ Gets playlists of a user
-
-            Parameters:
-                - playlist_name
+            Args:
+                playlist_name (str): Playlist name.
+            Returns:
+                str: The Spotify playlist ID if found, None otherwise.
         """
         user_id = self.sp.current_user()["id"]
         playlists = self.sp.user_playlists(user_id)
@@ -71,7 +72,7 @@ class Services:
         except Exception as error:
             show_logging(f"An unexpected error occurred: {error}", logging.ERROR)
 
-    def get_track_id(self, song_title, artist_name):
+    def get_track_id(self, song_title: str, artist_name: str) -> str:
         """
         Search for a track on Spotify by song title and artist name.
 
@@ -93,7 +94,7 @@ class Services:
         except IndexError:
             show_logging(f"{song_title} doesn't exist in Spotify. Skipped.", logging.ERROR)
 
-    def add_track_to_playlist(self, playlist_id, track_list, song, author):
+    def add_track_to_playlist(self, playlist_id: str, track_list: str, song: str, author: str) -> dict:
         """
         Add a track to a Spotify playlist.
 
