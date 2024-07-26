@@ -27,16 +27,4 @@ def setup_logging(log_file='app.log'):
 
 def show_logging(message, level=logging.INFO):
     logger = logging.getLogger()
-
-    if level == logging.DEBUG:
-        logger.debug(message)
-    elif level == logging.INFO:
-        logger.info(message)
-    elif level == logging.WARNING:
-        logger.warning(message)
-    elif level == logging.ERROR:
-        logger.error(message)
-    elif level == logging.CRITICAL:
-        logger.critical(message)
-    else:
-        logger.info(message)
+    logger.log(level, message)
